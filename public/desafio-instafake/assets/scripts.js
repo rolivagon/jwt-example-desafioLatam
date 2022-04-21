@@ -11,6 +11,7 @@ const consult = async (email, password) => {
                 password: password
             })
         })
+        //Almacenamiento local del token
         const { token } = await response.json()
         localStorage.setItem('jwt-token', token)
 
@@ -61,6 +62,7 @@ const getPhotos = async (jwt) => {
     }
 }
 
+//Agrega fotografías y autor a Cards individuales
 const fillCards = (dataCard) => {
     document.getElementById("js-form-wrapper").className = "col-md-6 d-none"
 
@@ -71,12 +73,13 @@ const fillCards = (dataCard) => {
               <img src="${dataCard[id = index].download_url}" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Autor: ${dataCard[id = index].author}</h5>
-                <p style="text-align: right; font-size: 0.75rem">Registro: ${index} - Id: ${dataCard[id = index].id}</p>
               </div>
             </div>`
     }
     document.getElementById("feedLogout").className = "col-md-8 my-3"
+    //Actualiza elemento de control de flujo de fotografías
     apiIdRegister = apiIdRegister + 4
+    //Control en consola
     console.log(`apiIdRegister: ${apiIdRegister}`)
 }
 
@@ -110,6 +113,7 @@ $('#jsForm').submit(async (event) => {
     const email = document.getElementById('exampleInputEmail1').value
     const pass = document.getElementById('exampleInputPassword1').value
 
+    //Control preventivo de acceso con email y password
     if (email != "" || pass != "") {
         const token = await consult(email, pass)
         const data = await getPhotos(token)
