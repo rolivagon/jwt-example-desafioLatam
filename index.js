@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const app = express()
 
+const cors = require('cors')
+app.use(cors())
+
 const options = {
     inflate: true,
     limit: 1000,
