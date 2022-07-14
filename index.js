@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const app = express()
 
+const cors = require('cors')
+app.use(cors())
+
 const options = {
     inflate: true,
     limit: 1000,
@@ -13,15 +16,26 @@ app.use(bodyParser.json(options))
 
 const {authApi} = require('./routes/auth')
 const {userPostApi} = require('./routes/posts')
-const jwtVerify = require('./middleware/jwtVerify')
+const {photosApi} = require('./routes/photos')
+const {covid19Api} = require('./routes/covid')
 
 authApi(app)
 userPostApi(app)
+photosApi(app)
+covid19Api(app)
 
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname+'/public/index.html'))
+app.get('/jwt-practico', (req, res) => {
+    res.sendFile(path.join(__dirname+'/public/jwt-practico/index.html'))
+});
+
+app.get('/desafio-instafake', (req, res) => {
+    res.sendFile(path.join(__dirname+'/public/desafio-instafake/index.html'))
+});
+
+app.get('/covid19', (req, res) => {
+    res.sendFile(path.join(__dirname+'/public/covid19/index.html'))
 });
 
 app.listen(3000,() => {
